@@ -47,8 +47,8 @@ Git首次安装的时候要先设置用户签名，否则无法提交；同时�
  ### 2.2 修改后的项目再次提交
 
 * git status
-* git add -A
-* git commit -m“日志信息” -a
+* git add --all
+* git commit -m“日志信息” --all
 * git push --all origin
 
 ## 3  Github
