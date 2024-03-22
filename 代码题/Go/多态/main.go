@@ -1,41 +1,30 @@
+// 多态的体现在于，把接口作为参数传入一个方法，根据接口指向的对象的不同而表现出不同的行为
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
-type Usb interface {
-	Study()
+type Anymal interface {
+	Voice()
 }
 
-type StuA struct {
-	sub string
-}
+type Dog struct{}
 
-func (a StuA) Study() {
-	fmt.Printf("a同学在学习%s\n", a.sub)
-}
+func (dog *Dog) Voice() { fmt.Println("汪汪汪~") }
 
-type StuB struct {
-	sub string
-}
+type Cat struct{}
 
-func (b StuB) Study() {
-	fmt.Printf("b同学在学习%s\n", b.sub)
-}
+func (cat *Cat) Voice() { fmt.Println("喵喵喵~") }
 
-type Working struct {
-}
+func MakeSound(a Anymal) { a.Voice() }
 
-func (w Working) StartStudy(u Usb) {
-	u.Study()
-}
 func main() {
-	var w Working
-	var u Usb
-	var a StuA = StuA{"数学"}
-	u = a
-	w.StartStudy(u)
-	var b StuB = StuB{"语文"}
-	u = b
-	w.StartStudy(u)
-
+	var inter Anymal
+	d := &Dog{}
+	inter = d
+	MakeSound(inter)
+	c := &Cat{}
+	inter = c
+	MakeSound(inter)
 }
