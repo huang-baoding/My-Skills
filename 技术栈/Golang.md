@@ -740,6 +740,7 @@ ch = make(chan int, 2)		//有缓冲channel，此时len（ch）为0，cap（ch）
 ```
 
 * make函数在初始化channel时只能接受一个或两个参数，channel只能指定容量不能指定长度
+* 对channel使用for range：如果channel中没有值则会阻塞，如果有值则复制给迭代变量。知道channel被关闭，for range才会结束迭代。
 
 #### 接口 interface
 
