@@ -472,6 +472,8 @@ rune是int32的别名，可以表示任何Unicode编码的字符
 var name string = "Tom"
 ```
 
+> string类型的变量其实是一个结构体，它有两个字段，一个是指针，指向底层只读的字节数组（[]byte），一个表示字符串的元素个数。（golang的字符串采用变长编码，如110\*\*\*\*\* 10\*\*\*\*\** 10\*\**\**\*表示一个字符）
+
 1. 字符串赋值后是不可变的。
 
 2. 对字符串使用for range得到的v是一个int32类型的字符。直接输出则是数字，用%c输出才是字符。
@@ -782,6 +784,30 @@ var name []string = []string{"Tom","Jerry"}	//此时长度和容量默认为2
 浅拷贝（修改会影响原切片值）：slice2=slice1
 
 #### 映射 map
+
+```go
+var m map[string]string = make(map[string]string,5)
+```
+
+map的底层结构：
+
+```go
+type hmap struct {
+	count     int // 元素数量
+	flags     uint8
+	B         uint8 // 桶数量，2^B 是桶的数量
+	noverflow uint16
+	hash0     uint32
+
+	buckets    unsafe.Pointer // 指向 buckets 数组的指针
+	oldbuckets unsafe.Pointer // 扩容时指向旧桶
+	nevacuate  uintptr        // 渐进式扩容时记录下一个要迁移的旧桶位置
+
+	extra *mapextra 		 // 溢出桶的相关信息
+}
+```
+
+
 
 map可以用len
 
