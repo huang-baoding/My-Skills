@@ -19,7 +19,7 @@ func provide(wgp *sync.WaitGroup, i int) {
 	defer wgp.Done()
 	for !stop {
 		pro_id := rand.Intn(100000)
-		m := Product{i, rand.Intn(100000)}
+		m := Product{i, pro_id}
 		ch <- m
 		fmt.Printf("生产者 %d 生产了产品： %d\n", i, pro_id)
 		time.Sleep(1 * time.Microsecond)
