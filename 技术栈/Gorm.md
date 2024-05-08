@@ -115,6 +115,22 @@ defer sqlDB.Close()
 
 ### 3.5  常用标签示例：
 
+```go
+type MyModel struct{
+    UUID uint `gorm:"Primarykey"`			//主键
+    Time time.Timer `gorm:"column:my_time"`  //表中列的名称
+}
+type User struct {
+//embedded是嵌套标签，嵌套字段必须标注，否则报错
+Model MyModel `gorm:"embedded;embeddedprefix:model"` 	//嵌套字段加上前缀便于区分
+Name string `gorm:"default:abc;index"`				//默认值为abc,并创建索引
+Email *string `gorm:"not null;"` 		//非空约束
+Age	uint8 `gorm:"comment:年龄”`			//备注
+}
+```
+
+
+
 ### 3.6  创建并输出命令结果
 
 ```go
@@ -130,13 +146,9 @@ var GLOBAL *gorm.DB = db
 func CreateTest() {
 
     dbres := GLOBAL.Create(&[]User{
-
         {Name: "tom", Age: 18},
-
         {Name: "jerry", Age: 18},
-
         {Name: "johny", Age: 19},
-
         {Name: "json", Age: 20},
 
     })
